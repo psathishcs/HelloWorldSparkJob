@@ -34,7 +34,7 @@ task(runHelloWordCount, dependsOn: 'classes', type: JavaExec) {
 }
 
 task(runHelloWordCountHDFS, dependsOn: 'classes', type: JavaExec) {
-   main = 'org.hello.spark.HelloWordCount'
+   main = 'org.hello.spark.HelloWordCountHDFS'
    classpath = sourceSets.main.runtimeClasspath
    args 'datasets/RITA/2007.csv'
    systemProperty 'simple.message', 'Hellom, World: Word Count!'

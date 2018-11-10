@@ -23,10 +23,10 @@ public class HelloWordCountHDFS {
 	private static void wordCount(String fileName) {
 		SparkConf conf = new SparkConf().setMaster("local").setAppName("JD Word Counter");
 		JavaSparkContext context = new JavaSparkContext(conf);
-		JavaRDD<String> inputFile = context.textFile("hdfs://"+fileName);
+		JavaRDD<String> inputFile = context.textFile("hdfs://localhost:9000/"+fileName);
 		@SuppressWarnings("unchecked")
 		JavaRDD<String> wordFromsFile = inputFile.flatMap(content -> Arrays.asList(content.split(",")).iterator());
 		JavaPairRDD<String, Integer> counts = wordFromsFile.mapToPair(word -> new Tuple2<>(word, 1)).reduceByKey((a, b) -> (int)a +(int)b);
-		counts.saveAsTextFile("hdfs://output/CountData");
+		counts.saveAsTextFile("hdfs://localhost:9000/output/CountData");
 	}
 }
