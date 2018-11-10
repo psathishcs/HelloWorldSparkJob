@@ -9,7 +9,7 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin:'application'
-mainClassName = 'org.hello.spark.HelloWordCount'
+
 
 dependencies {
    
@@ -25,3 +25,18 @@ repositories {
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
 }
+
+task(runHelloWordCount, dependsOn: 'classes', type: JavaExec) {
+   main = 'org.hello.spark.HelloWordCount'
+   classpath = sourceSets.main.runtimeClasspath
+   args '/home/psathishcs/datasets/RITA/2007.csv'
+   systemProperty 'simple.message', 'Hellom, World: Word Count!'
+}
+
+task(runHelloWordCountHDFS, dependsOn: 'classes', type: JavaExec) {
+   main = 'org.hello.spark.HelloWordCount'
+   classpath = sourceSets.main.runtimeClasspath
+   args 'datasets/RITA/2007.csv'
+   systemProperty 'simple.message', 'Hellom, World: Word Count!'
+}
+
