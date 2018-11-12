@@ -23,6 +23,7 @@ public class HelloWordCountHive {
 		SparkSession session =  SparkSession
 				.builder()
 				.appName("Word Counter Hive")
+				.config("spark.master", "local")
 				.config("spark.sql.warehouse.dir", "/user/hive/warehouse")
 				.enableHiveSupport()
 				.getOrCreate();
