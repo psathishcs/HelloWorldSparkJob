@@ -7,6 +7,7 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SaveMode;
 import org.apache.spark.sql.SparkSession;
 
 import scala.Tuple2;
@@ -24,7 +25,8 @@ public class HelloWordCountHive {
 				.builder()
 				.appName("Word Counter Hive")
 				.config("spark.master", "local")
-				.config("spark.sql.warehouse.dir", "/user/hive/warehouse")
+				.config("hive.metastore.uris", "thrift://localhost:9083")
+				//.config("spark.sql.warehouse.dir", "/user/hive/warehouse")
 				.enableHiveSupport()
 				.getOrCreate();
 		JavaRDD<String> inputFile = ( session.read().csv("hdfs://localhost:9000/"+fileName).javaRDD().map(row -> row.toString()));
@@ -32,8 +34,9 @@ public class HelloWordCountHive {
 		JavaPairRDD<String, Integer> counts = wordFromsFile.mapToPair(word -> new Tuple2<>(word, 1)).reduceByKey((a, b) -> (int)a +(int)b);
 		Dataset<Row> wordCountDS = session.createDataset(counts.collect(), Encoders.tuple(Encoders.STRING(), Encoders.INT())).toDF("word", "count");
 		wordCountDS.show();
-		System.out.println("show");
 		System.out.println("wordCountDS.count(): " + wordCountDS.count());
+		wordCountDS.write().mode(SaveMode.Overwrite).saveAsTable("hello.word_count");
+
 
 	}
 }
