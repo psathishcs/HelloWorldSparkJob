@@ -17,7 +17,11 @@ dependencies {
 	compile group: 'org.apache.spark', name: 'spark-sql_2.11', version: '2.3.2'
 	compile group: 'org.apache.spark', name: 'spark-hive_2.11', version: '2.3.2'
 	compile group: 'org.apache.hbase', name: 'hbase-spark', version: '2.0.0-alpha4'
-	compile group: 'org.apache.kafka', name: 'kafka-clients', version: '2.0.0'
+	compile group: 'org.apache.spark', name: 'spark-streaming_2.11', version: '2.3.2'
+	compile group: 'org.apache.spark', name: 'spark-streaming-kafka_2.11', version: '1.6.3'
+	
+	
+
 	
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
@@ -54,4 +58,9 @@ task runKafkaProducerFile (type: JavaExec) {
    main = 'org.hello.spark.kafka.KafkaProducerFile'
    classpath = sourceSets.main.runtimeClasspath
    args '/user/psathishcs/datasets/RITA/2007.csv'
+}
+
+task runHelloWorldKafkaStreaming (type: JavaExec) {
+   main = 'org.hello.spark.kafka.HelloWorldKafkaStreaming'
+   classpath = sourceSets.main.runtimeClasspath
 }
