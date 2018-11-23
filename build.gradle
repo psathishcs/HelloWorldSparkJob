@@ -15,11 +15,12 @@ dependencies {
 	compile group: 'org.apache.spark', name: 'spark-sql_2.11', version: '2.3.2'
 	compile group: 'org.apache.spark', name: 'spark-hive_2.11', version: '2.3.2'
 	compile group: 'org.apache.hbase', name: 'hbase-spark', version: '2.0.0-alpha4'
-	compile group: 'org.apache.spark', name: 'spark-streaming_2.12', version: '2.3.2'
-	compile (group: 'org.apache.spark', name: 'spark-streaming-kafka_2.11', version: '1.6.3') {
-		exclude group:"com.fasterxml.jackson.core"
-	}
-	compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-scala_2.11', version: '2.9.6'
+	compile group: 'org.apache.spark', name: 'spark-streaming_2.11', version: '2.3.2'
+	compile group: 'org.apache.spark', name: 'spark-streaming-kafka-0-10_2.11', version: '2.3.2'
+	//compile (group: 'org.apache.spark', name: 'spark-streaming-kafka_2.11', version: '1.6.3') {
+	//	exclude group:"com.fasterxml.jackson.core"
+	//}
+	//compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-scala_2.11', version: '2.9.6'
 }
 
 // In this section you declare where to find the dependencies of your project

@@ -26,7 +26,6 @@ public class HelloWordCountHive {
 				.appName("Word Counter Hive")
 				.config("spark.master", "local")
 				.config("hive.metastore.uris", "thrift://localhost:9083")
-				//.config("spark.sql.warehouse.dir", "/user/hive/warehouse")
 				.enableHiveSupport()
 				.getOrCreate();
 		JavaRDD<String> inputFile = ( session.read().csv("hdfs://localhost:9000/"+fileName).javaRDD().map(row -> row.toString()));

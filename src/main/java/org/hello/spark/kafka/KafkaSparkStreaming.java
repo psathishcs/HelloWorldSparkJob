@@ -1,5 +1,6 @@
 package org.hello.spark.kafka;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,12 +8,14 @@ import java.util.Set;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.api.java.function.Function;
 import org.apache.spark.streaming.Duration;
+import org.apache.spark.streaming.Durations;
 import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaPairInputDStream;
+import org.apache.spark.streaming.api.java.JavaReceiverInputDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 import org.apache.spark.streaming.kafka.KafkaUtils;
-import org.apache.spark.api.java.function.Function;
 
 import kafka.serializer.StringDecoder;
 import scala.Tuple2;
@@ -28,12 +31,14 @@ public class KafkaSparkStreaming {
 		Set<String> topicName = Collections.singleton("Hello-Kafka");
 		JavaPairInputDStream<String, String> kafkaJavaPairInputDStream = KafkaUtils.createDirectStream(streamingContext,
 				String.class, String.class, StringDecoder.class, StringDecoder.class, kafkaParams, topicName);
-		JavaDStream<String> kafkaDStream = kafkaJavaPairInputDStream.map(new Function<Tuple2<String, String>, String>() {
-			private static final long serialVersionUID = 1L;
-			public String call(Tuple2<String, String> tuple2) {
-				return tuple2._2;
-			}
-		});
+		JavaDStream<String> kafkaDStream = kafkaJavaPairInputDStream
+				.map(new Function<Tuple2<String, String>, String>() {
+					private static final long serialVersionUID = 1L;
+
+					public String call(Tuple2<String, String> tuple2) {
+						return tuple2._2;
+					}
+				});
 		kafkaDStream.print();
 		streamingContext.start();
 		streamingContext.awaitTermination();
