@@ -1,6 +1,7 @@
 package org.hello.spark;
 
 
+import org.apache.spark.SparkConf;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
@@ -12,7 +13,11 @@ public class FlightDataCSVtoHive {
 			System.out.println("No files provided");
 			System.exit(0);
 		}
-		spark =  SparkSession.builder().appName("Read flight CSV data and write to flight_data Hive table").getOrCreate();
+		SparkConf conf = new SparkConf();
+		if (System.getenv("env") != null && System.getenv("env").equals("local")) {
+			conf.setMaster("local").set("spark.driver.host", "localhost");
+		}
+		spark =  SparkSession.builder().config(conf).appName("Read flight CSV data and write to flight_data Hive table").getOrCreate();
 		Dataset<Row> flightData = readCSV(args[0]);
 		flightData.show();
 		System.out.println("Flight data count : " + flightData.count());

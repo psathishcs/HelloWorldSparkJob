@@ -33,14 +33,14 @@ task runHelloWordCount (type: JavaExec) {
    main = 'org.hello.spark.HelloWordCount'
    classpath = sourceSets.main.runtimeClasspath
    args '/home/psathishcs/datasets/RITA/2007.csv'
-   systemProperty 'simple.message', 'Hellom, World: Word Count!'
+   systemProperty 'simple.message', 'Hello, World: Word Count!'
 }
 
 task runHelloWordCountHDFS (type: JavaExec) {
    main = 'org.hello.spark.HelloWordCountHDFS'
    classpath = sourceSets.main.runtimeClasspath
    args 'datasets/RITA/2007.csv'
-   systemProperty 'simple.message', 'Hellom, World: Word Count!'
+   systemProperty 'simple.message', 'Hello, World: Word Count!'
 }
 task runHelloWordCountHive (type: JavaExec) {
    main = 'org.hello.spark.HelloWordCountHive'
@@ -64,4 +64,5 @@ task runFlightDataCSVtoHive (type: JavaExec) {
    main = 'org.hello.spark.FlightDataCSVtoHive'
    classpath = sourceSets.main.runtimeClasspath
    args '/user/psathishcs/datasets/RITA/2007.csv'
+   environment 'env', 'local'
 }
