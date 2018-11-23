@@ -16,9 +16,15 @@ public class FlightDataCSVtoHive {
 		}
 		SparkConf conf = new SparkConf();
 		if (System.getenv("env") != null && System.getenv("env").equals("local")) {
-			conf.setMaster("local").set("spark.driver.host", "localhost");
+			conf.setMaster("local")
+			.set("spark.driver.host", "localhost")
+			.set("hive.metastore.uris", "thrift://skylark.datalake:9083");
+			
 		}
-		spark =  SparkSession.builder().config(conf).appName("Read flight CSV data and write to flight_data Hive table").getOrCreate();
+		spark =  SparkSession.builder().config(conf)
+				.appName("Read flight CSV data and write to flight_data Hive table")
+				.enableHiveSupport()
+				.getOrCreate();
 		Dataset<Row> flightData = readCSV(args[0]);
 		flightData.show();
 		flightData.write().mode(SaveMode.Overwrite).saveAsTable("flight.flight_data");
