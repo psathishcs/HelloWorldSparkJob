@@ -61,6 +61,6 @@ task runKafkaProducerFile (type: JavaExec) {
 }
 
 task runHelloWorldKafkaStreaming (type: JavaExec) {
-   main = 'org.hello.spark.kafka.HelloWorldKafkaStreaming'
+   main = 'org.hello.spark.HelloWorldKafkaStreaming'
    classpath = sourceSets.main.runtimeClasspath
 }
