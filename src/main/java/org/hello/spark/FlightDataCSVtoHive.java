@@ -18,7 +18,7 @@ public class FlightDataCSVtoHive {
 		System.out.println("Flight data count : " + flightData.count());
 	}
 	private static Dataset<Row> readCSV(String fileName) {
-		Dataset<Row> flightData = spark.read().format("csv").option("header", "true").load("hdfs://localhost:9000/"+ fileName);
+		Dataset<Row> flightData = spark.read().format("csv").option("header", "true").load("hdfs://skylark.datalake:9000/"+ fileName);
 		return flightData;
 
 	}

@@ -25,10 +25,10 @@ public class HelloWordCountHive {
 				.builder()
 				.appName("Word Counter Hive")
 				.config("spark.master", "local")
-				.config("hive.metastore.uris", "thrift://localhost:9083")
+				.config("hive.metastore.uris", "thrift://skylark.datalake:9083")
 				.enableHiveSupport()
 				.getOrCreate();
-		JavaRDD<String> inputFile = ( session.read().csv("hdfs://localhost:9000/"+fileName).javaRDD().map(row -> row.toString()));
+		JavaRDD<String> inputFile = ( session.read().csv("hdfs://skylark.datalake:9000/"+fileName).javaRDD().map(row -> row.toString()));
 		JavaRDD<String> wordFromsFile = inputFile.flatMap(content -> Arrays.asList(content.split(",")).iterator());
 		JavaPairRDD<String, Integer> counts = wordFromsFile.mapToPair(word -> new Tuple2<>(word, 1)).reduceByKey((a, b) -> (int)a +(int)b);
 		Dataset<Row> wordCountDS = session.createDataset(counts.collect(), Encoders.tuple(Encoders.STRING(), Encoders.INT())).toDF("word", "count");
