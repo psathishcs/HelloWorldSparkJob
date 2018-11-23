@@ -61,7 +61,7 @@ task runHelloWorldKafkaStreaming (type: JavaExec) {
 }
 
 task runFlightDataCSVtoHive (type: JavaExec) {
-   main = 'org.hello.spark.kafka.FlightDataCSVtoHive'
+   main = 'org.hello.spark.FlightDataCSVtoHive'
    classpath = sourceSets.main.runtimeClasspath
    args '/user/psathishcs/datasets/RITA/2007.csv'
 }
