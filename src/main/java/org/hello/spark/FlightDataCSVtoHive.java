@@ -21,7 +21,7 @@ public class FlightDataCSVtoHive {
 		spark =  SparkSession.builder().config(conf).appName("Read flight CSV data and write to flight_data Hive table").getOrCreate();
 		Dataset<Row> flightData = readCSV(args[0]);
 		flightData.show();
-		flightData.write().mode(SaveMode.Overwrite).insertInto("flight.flight_data");
+		flightData.write().mode(SaveMode.Overwrite).saveAsTable("flight.flight_data");
 	}
 	private static Dataset<Row> readCSV(String fileName) {
 		Dataset<Row> flightData = spark.read().format("csv").option("header", "true").load("hdfs://skylark.datalake:9000/"+ fileName);
