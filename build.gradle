@@ -16,6 +16,8 @@ dependencies {
 	compile group: 'org.apache.spark', name: 'spark-core_2.11', version: '2.3.2'
 	compile group: 'org.apache.spark', name: 'spark-sql_2.11', version: '2.3.2'
 	compile group: 'org.apache.spark', name: 'spark-hive_2.11', version: '2.3.2'
+	compile group: 'org.apache.hbase', name: 'hbase-spark', version: '2.0.0-alpha4'
+	compile group: 'org.apache.kafka', name: 'kafka-clients', version: '2.0.0'
 	
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
@@ -28,23 +30,28 @@ repositories {
     jcenter()
 }
 
-task(runHelloWordCount, dependsOn: 'classes', type: JavaExec) {
+task runHelloWordCount (type: JavaExec) {
    main = 'org.hello.spark.HelloWordCount'
    classpath = sourceSets.main.runtimeClasspath
    args '/home/psathishcs/datasets/RITA/2007.csv'
    systemProperty 'simple.message', 'Hellom, World: Word Count!'
 }
 
-task(runHelloWordCountHDFS, dependsOn: 'classes', type: JavaExec) {
+task runHelloWordCountHDFS (type: JavaExec) {
    main = 'org.hello.spark.HelloWordCountHDFS'
    classpath = sourceSets.main.runtimeClasspath
    args 'datasets/RITA/2007.csv'
    systemProperty 'simple.message', 'Hellom, World: Word Count!'
 }
-task(runHelloWordCountHive, dependsOn: 'classes', type: JavaExec) {
+task runHelloWordCountHive (type: JavaExec) {
    main = 'org.hello.spark.HelloWordCountHive'
    classpath = sourceSets.main.runtimeClasspath
    args 'user/psathishcs/datasets/RITA/2007.csv'
    systemProperty 'simple.message', 'Hellom, World: Word Count!'
 }
 
+task runKafkaProducerFile (type: JavaExec) {
+   main = 'org.hello.spark.kafka.KafkaProducerFile'
+   classpath = sourceSets.main.runtimeClasspath
+   args '/user/psathishcs/datasets/RITA/2007.csv'
+}
