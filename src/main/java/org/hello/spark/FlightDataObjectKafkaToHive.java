@@ -3,13 +3,11 @@ package org.hello.spark;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Encoders;
@@ -23,6 +21,7 @@ import org.apache.spark.streaming.kafka010.ConsumerStrategies;
 import org.apache.spark.streaming.kafka010.KafkaUtils;
 import org.apache.spark.streaming.kafka010.LocationStrategies;
 import org.hello.spark.dataobject.FlightData;
+import org.hello.spark.dataobject.FlightDataDeserializer;
 
 public class FlightDataObjectKafkaToHive {
 	static SparkSession spark;
@@ -37,7 +36,7 @@ public class FlightDataObjectKafkaToHive {
 		Map<String, Object> kafkaParams = new HashMap<String, Object>();
 		kafkaParams.put("bootstrap.servers", "skylark.datalake:9092");
 		kafkaParams.put("key.deserializer", StringDeserializer.class);
-		kafkaParams.put("value.deserializer", StringDeserializer.class);
+		kafkaParams.put("value.deserializer", FlightDataDeserializer.class);
 		kafkaParams.put("group.id", "rita");
 		kafkaParams.put("auto.offset.reset", "latest");
 		kafkaParams.put("enable.auto.commit", false);
@@ -48,7 +47,7 @@ public class FlightDataObjectKafkaToHive {
 				ConsumerStrategies.<String, FlightData>Subscribe(topics, kafkaParams));
 
 		JavaDStream<FlightData> dStream = stream.map(record -> record.value());
-		dStream.foreachRDD((rdd, time) -> {
+		dStream.foreachRDD((rdd) -> {
 			SparkSession spark = JavaSparkSessionSingleton.getInstance(rdd.context().getConf());
 			Dataset<Row> flightDataDF = spark.createDataFrame(rdd, FlightData.class);
 			Dataset<FlightData> flightDataDS = flightDataDF.as(Encoders.bean(FlightData.class));
