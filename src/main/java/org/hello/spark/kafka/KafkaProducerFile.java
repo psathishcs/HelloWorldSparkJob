@@ -15,7 +15,7 @@ public class KafkaProducerFile {
 		}
 		String fileName = args[0];
 		String line = null;
-		String topic = "rita-flight-info";
+		String topic = "flight_data";
 		Properties properties = new Properties();
 		properties.put("bootstrap.servers", "skylark.datalake:9092");
 		properties.put("group.id", "hello-kafka-java-group");
