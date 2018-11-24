@@ -9,6 +9,9 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Encoders;
+import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.streaming.Durations;
 import org.apache.spark.streaming.api.java.JavaDStream;
@@ -17,9 +20,7 @@ import org.apache.spark.streaming.api.java.JavaStreamingContext;
 import org.apache.spark.streaming.kafka010.ConsumerStrategies;
 import org.apache.spark.streaming.kafka010.KafkaUtils;
 import org.apache.spark.streaming.kafka010.LocationStrategies;
-
-
-import scala.Tuple2;
+import org.hello.spark.dataobject.FlightData;
 
 public class FlightDataKafkaToHive {
 	static SparkSession spark;
@@ -44,10 +45,31 @@ public class FlightDataKafkaToHive {
 				KafkaUtils.createDirectStream(ssc,
 				LocationStrategies.PreferConsistent(),
 				ConsumerStrategies.<String, String>Subscribe(topics, kafkaParams));
-		
+		JavaDStream<Object> dStream = stream.map(record -> record.value());
+		dStream.foreachRDD((rdd, time) -> {
+			SparkSession spark = JavaSparkSessionSingleton.getInstance(rdd.context().getConf());
+			Dataset<Row> flightDataDF = spark.createDataFrame(rdd, FlightData.class);
+			Dataset<FlightData> flightDataDS = flightDataDF.as(Encoders.bean(FlightData.class));
+			flightDataDS.show();
+		});
+
 		ssc.start();
 		ssc.awaitTermination();
-
-		
 	}
+}
+
+
+/** Lazily instantiated singleton instance of SparkSession */
+class JavaSparkSessionSingleton {
+  private static transient SparkSession instance = null;
+  public static SparkSession getInstance(SparkConf sparkConf) {
+    if (instance == null) {
+      instance = SparkSession
+        .builder()
+        .config(sparkConf)
+        .enableHiveSupport()
+        .getOrCreate();
+    }
+    return instance;
+  }
 }

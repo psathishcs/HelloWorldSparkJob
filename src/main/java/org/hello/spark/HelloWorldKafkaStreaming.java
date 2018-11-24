@@ -10,6 +10,7 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.streaming.Durations;
+import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaInputDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 import org.apache.spark.streaming.kafka010.ConsumerStrategies;
@@ -43,9 +44,10 @@ public class HelloWorldKafkaStreaming {
 				KafkaUtils.createDirectStream(ssc,
 				LocationStrategies.PreferConsistent(),
 				ConsumerStrategies.<String, String>Subscribe(topics, kafkaParams));
-		stream.mapToPair(record -> new Tuple2<>(record.key(), record.value())).print();
-		stream.map(record -> record.value()).print();
-	
+		
+		JavaDStream<Object> dStream = stream.map(record -> record.value());
+		dStream.print();
+
 		ssc.start();
 		ssc.awaitTermination();
 

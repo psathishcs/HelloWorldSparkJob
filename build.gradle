@@ -66,3 +66,8 @@ task runFlightDataCSVtoHive (type: JavaExec) {
    args '/user/psathishcs/datasets/RITA/2007.csv'
    environment 'env', 'local'
 }
+
+task runFlightDataKafkaToHive (type: JavaExec) {
+   main = 'org.hello.spark.FlightDataKafkaToHive'
+   classpath = sourceSets.main.runtimeClasspath
+}
