@@ -10,82 +10,120 @@ import java.io.Serializable;
 
 public class FlightData implements Serializable { 
 	private static final long serialversionUID = 129348938L; 
-	private Integer year;
-	private Integer month;
-	private Integer day;
-	private Integer day_of_week;
-	private Integer dep_time;
-	private Integer crs_dep_time;
-	private Integer arr_time;
-	private Integer crs_arr_time;
+	private String year;
+	private String month;
+	private String day;
+	private String day_of_week;
+	private String dep_time;
+	private String crs_dep_time;
+	private String arr_time;
+	private String crs_arr_time;
 	private String unique_carrier;
-	private Integer flight_num;
+	private String flight_num;
 	private String tail_num;
-	private Integer actual_elapsed_time;
-	private Integer crs_elapsed_time;
-	private Integer air_time;
-	private Integer arr_delay;
-	private Integer dep_delay;
+	private String actual_elapsed_time;
+	private String crs_elapsed_time;
+	private String air_time;
+	private String arr_delay;
+	private String dep_delay;
 	private String origin;
 	private String dest;
-	private Integer distance;
-	private Integer taxi_in;
-	private Integer taxi_out;
-	private Integer cancelled;
+	private String distance;
+	private String taxi_in;
+	private String taxi_out;
+	private String cancelled;
 	private String cancellation_code;
-	private Integer diverted;
+	private String diverted;
 	private String carrier_delay;
 	private String weather_delay;
 	private String nas_delay;
 	private String security_delay;
 	private String late_aircraft_delay;
 	
-	public Integer getYear() {
+	
+	public FlightData(String year, String month, String day, String day_of_week, String dep_time,
+			String crs_dep_time, String arr_time, String crs_arr_time, String unique_carrier, String flight_num,
+			String tail_num, String actual_elapsed_time, String crs_elapsed_time, String air_time, String arr_delay,
+			String dep_delay, String origin, String dest, String distance, String taxi_in, String taxi_out,
+			String cancelled, String cancellation_code, String diverted, String carrier_delay, String weather_delay,
+			String nas_delay, String security_delay, String late_aircraft_delay) {
+		super();
+		this.year = year;
+		this.month = month;
+		this.day = day;
+		this.day_of_week = day_of_week;
+		this.dep_time = dep_time;
+		this.crs_dep_time = crs_dep_time;
+		this.arr_time = arr_time;
+		this.crs_arr_time = crs_arr_time;
+		this.unique_carrier = unique_carrier;
+		this.flight_num = flight_num;
+		this.tail_num = tail_num;
+		this.actual_elapsed_time = actual_elapsed_time;
+		this.crs_elapsed_time = crs_elapsed_time;
+		this.air_time = air_time;
+		this.arr_delay = arr_delay;
+		this.dep_delay = dep_delay;
+		this.origin = origin;
+		this.dest = dest;
+		this.distance = distance;
+		this.taxi_in = taxi_in;
+		this.taxi_out = taxi_out;
+		this.cancelled = cancelled;
+		this.cancellation_code = cancellation_code;
+		this.diverted = diverted;
+		this.carrier_delay = carrier_delay;
+		this.weather_delay = weather_delay;
+		this.nas_delay = nas_delay;
+		this.security_delay = security_delay;
+		this.late_aircraft_delay = late_aircraft_delay;
+	}
+	public String getYear() {
 		return year;
 	}
-	public void setYear(Integer year) {
+	public void setYear(String year) {
 		this.year = year;
 	}
-	public Integer getMonth() {
+	public String getMonth() {
 		return month;
 	}
-	public void setMonth(Integer month) {
+	public void setMonth(String month) {
 		this.month = month;
 	}
-	public Integer getDay() {
+	public String getDay() {
 		return day;
 	}
-	public void setDay(Integer day) {
+	public void setDay(String day) {
 		this.day = day;
 	}
-	public Integer getDay_of_week() {
+	public String getDay_of_week() {
 		return day_of_week;
 	}
-	public void setDay_of_week(Integer day_of_week) {
+	public void setDay_of_week(String day_of_week) {
 		this.day_of_week = day_of_week;
 	}
-	public Integer getDep_time() {
+	public String getDep_time() {
 		return dep_time;
 	}
-	public void setDep_time(Integer dep_time) {
+	public void setDep_time(String dep_time) {
 		this.dep_time = dep_time;
 	}
-	public Integer getCrs_dep_time() {
+	public String getCrs_dep_time() {
 		return crs_dep_time;
 	}
-	public void setCrs_dep_time(Integer crs_dep_time) {
+	public void setCrs_dep_time(String crs_dep_time) {
 		this.crs_dep_time = crs_dep_time;
 	}
-	public Integer getArr_time() {
+	public String getArr_time() {
 		return arr_time;
 	}
-	public void setArr_time(Integer arr_time) {
+	public void setArr_time(String arr_time) {
 		this.arr_time = arr_time;
 	}
-	public Integer getCrs_arr_time() {
+	public String getCrs_arr_time() {
 		return crs_arr_time;
 	}
-	public void setCrs_arr_time(Integer crs_arr_time) {
+	public void setCrs_arr_time(String crs_arr_time) {
 		this.crs_arr_time = crs_arr_time;
 	}
 	public String getUnique_carrier() {
@@ -94,10 +132,10 @@ public class FlightData implements Serializable {
 	public void setUnique_carrier(String unique_carrier) {
 		this.unique_carrier = unique_carrier;
 	}
-	public Integer getFlight_num() {
+	public String getFlight_num() {
 		return flight_num;
 	}
-	public void setFlight_num(Integer flight_num) {
+	public void setFlight_num(String flight_num) {
 		this.flight_num = flight_num;
 	}
 	public String getTail_num() {
@@ -106,34 +144,34 @@ public class FlightData implements Serializable {
 	public void setTail_num(String tail_num) {
 		this.tail_num = tail_num;
 	}
-	public Integer getActual_elapsed_time() {
+	public String getActual_elapsed_time() {
 		return actual_elapsed_time;
 	}
-	public void setActual_elapsed_time(Integer actual_elapsed_time) {
+	public void setActual_elapsed_time(String actual_elapsed_time) {
 		this.actual_elapsed_time = actual_elapsed_time;
 	}
-	public Integer getCrs_elapsed_time() {
+	public String getCrs_elapsed_time() {
 		return crs_elapsed_time;
 	}
-	public void setCrs_elapsed_time(Integer crs_elapsed_time) {
+	public void setCrs_elapsed_time(String crs_elapsed_time) {
 		this.crs_elapsed_time = crs_elapsed_time;
 	}
-	public Integer getAir_time() {
+	public String getAir_time() {
 		return air_time;
 	}
-	public void setAir_time(Integer air_time) {
+	public void setAir_time(String air_time) {
 		this.air_time = air_time;
 	}
-	public Integer getArr_delay() {
+	public String getArr_delay() {
 		return arr_delay;
 	}
-	public void setArr_delay(Integer arr_delay) {
+	public void setArr_delay(String arr_delay) {
 		this.arr_delay = arr_delay;
 	}
-	public Integer getDep_delay() {
+	public String getDep_delay() {
 		return dep_delay;
 	}
-	public void setDep_delay(Integer dep_delay) {
+	public void setDep_delay(String dep_delay) {
 		this.dep_delay = dep_delay;
 	}
 	public String getOrigin() {
@@ -148,28 +186,28 @@ public class FlightData implements Serializable {
 	public void setDest(String dest) {
 		this.dest = dest;
 	}
-	public Integer getDistance() {
+	public String getDistance() {
 		return distance;
 	}
-	public void setDistance(Integer distance) {
+	public void setDistance(String distance) {
 		this.distance = distance;
 	}
-	public Integer getTaxi_in() {
+	public String getTaxi_in() {
 		return taxi_in;
 	}
-	public void setTaxi_in(Integer taxi_in) {
+	public void setTaxi_in(String taxi_in) {
 		this.taxi_in = taxi_in;
 	}
-	public Integer getTaxi_out() {
+	public String getTaxi_out() {
 		return taxi_out;
 	}
-	public void setTaxi_out(Integer taxi_out) {
+	public void setTaxi_out(String taxi_out) {
 		this.taxi_out = taxi_out;
 	}
-	public Integer getCancelled() {
+	public String getCancelled() {
 		return cancelled;
 	}
-	public void setCancelled(Integer cancelled) {
+	public void setCancelled(String cancelled) {
 		this.cancelled = cancelled;
 	}
 	public String getCancellation_code() {
@@ -178,10 +216,10 @@ public class FlightData implements Serializable {
 	public void setCancellation_code(String cancellation_code) {
 		this.cancellation_code = cancellation_code;
 	}
-	public Integer getDiverted() {
+	public String getDiverted() {
 		return diverted;
 	}
-	public void setDiverted(Integer diverted) {
+	public void setDiverted(String diverted) {
 		this.diverted = diverted;
 	}
 	public String getCarrier_delay() {
