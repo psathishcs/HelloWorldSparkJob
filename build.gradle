@@ -52,7 +52,7 @@ task runHelloWordCountHive (type: JavaExec) {
 task runKafkaProducerFile (type: JavaExec) {
    main = 'org.hello.spark.kafka.KafkaProducerFile'
    classpath = sourceSets.main.runtimeClasspath
-   args '/user/psathishcs/datasets/RITA/2007.csv'
+   args '/home/psathishcs/datasets/RITA/2007.csv'
 }
 
 task runHelloWorldKafkaStreaming (type: JavaExec) {

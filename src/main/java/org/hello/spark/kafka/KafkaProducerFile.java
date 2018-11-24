@@ -18,7 +18,7 @@ public class KafkaProducerFile {
 		String topic = "flight_data";
 		Properties properties = new Properties();
 		properties.put("bootstrap.servers", "skylark.datalake:9092");
-		properties.put("group.id", "hello-kafka-java-group");
+		properties.put("group.id", "rita");
 		 properties.put("client.id", "KafkaFileProducer");
 		properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 		properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");

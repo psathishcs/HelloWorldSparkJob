@@ -36,7 +36,7 @@ public class FlightDataKafkaToHive {
 		kafkaParams.put("bootstrap.servers", "skylark.datalake:9092");
 		kafkaParams.put("key.deserializer", StringDeserializer.class);
 		kafkaParams.put("value.deserializer", StringDeserializer.class);
-		kafkaParams.put("group.id", "1");
+		kafkaParams.put("group.id", "flight_data");
 		kafkaParams.put("auto.offset.reset", "latest");
 		kafkaParams.put("enable.auto.commit", false);
 		
