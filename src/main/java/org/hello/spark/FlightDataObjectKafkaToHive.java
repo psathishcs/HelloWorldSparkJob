@@ -24,7 +24,7 @@ import org.apache.spark.streaming.kafka010.KafkaUtils;
 import org.apache.spark.streaming.kafka010.LocationStrategies;
 import org.hello.spark.dataobject.FlightData;
 
-public class FlightDataKafkaToHive {
+public class FlightDataObjectKafkaToHive {
 	static SparkSession spark;
 
 	public static void main(String[] args) throws InterruptedException {
@@ -43,24 +43,14 @@ public class FlightDataKafkaToHive {
 		kafkaParams.put("enable.auto.commit", false);
 
 		Collection<String> topics = Arrays.asList("flight_data");
-		JavaInputDStream<ConsumerRecord<String, String>> stream = KafkaUtils.createDirectStream(ssc,
+		JavaInputDStream<ConsumerRecord<String, FlightData>> stream = KafkaUtils.createDirectStream(ssc,
 				LocationStrategies.PreferConsistent(),
-				ConsumerStrategies.<String, String>Subscribe(topics, kafkaParams));
+				ConsumerStrategies.<String, FlightData>Subscribe(topics, kafkaParams));
 
-		JavaDStream<String> dStream = stream.map(record -> record.value());
+		JavaDStream<FlightData> dStream = stream.map(record -> record.value());
 		dStream.foreachRDD((rdd, time) -> {
 			SparkSession spark = JavaSparkSessionSingleton.getInstance(rdd.context().getConf());
-			JavaRDD<FlightData> rowRDD = rdd.map(line -> {
-				List<String> result = Arrays.asList(line.split(","));
-				FlightData record = new FlightData(result.get(0), result.get(1), result.get(2), result.get(3),
-						result.get(4), result.get(5), result.get(6), result.get(7), result.get(8), result.get(9),
-						result.get(10), result.get(11), result.get(12), result.get(13), result.get(14), result.get(15),
-						result.get(16), result.get(17), result.get(18), result.get(19), result.get(20), result.get(21),
-						result.get(22), result.get(23), result.get(24), result.get(25), result.get(26), result.get(27),
-						result.get(28));
-				return record;
-			});
-			Dataset<Row> flightDataDF = spark.createDataFrame(rowRDD, FlightData.class);
+			Dataset<Row> flightDataDF = spark.createDataFrame(rdd, FlightData.class);
 			Dataset<FlightData> flightDataDS = flightDataDF.as(Encoders.bean(FlightData.class));
 			flightDataDS.show();
 		});

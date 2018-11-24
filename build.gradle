@@ -71,3 +71,16 @@ task runFlightDataKafkaToHive (type: JavaExec) {
    main = 'org.hello.spark.FlightDataKafkaToHive'
    classpath = sourceSets.main.runtimeClasspath
 }
+
+task runKafkaProducerFlightDataObjectFile (type: JavaExec) {
+   main = 'org.hello.spark.kafka.KafkaProducerFlightDataObjectFile'
+   classpath = sourceSets.main.runtimeClasspath
+   args '/home/psathishcs/datasets/RITA/2007.csv'
+}
+
+task runFlightDataObjectKafkaToHive (type: JavaExec) {
+   main = 'org.hello.spark.FlightDataObjectKafkaToHive'
+   classpath = sourceSets.main.runtimeClasspath
+}
+
+
