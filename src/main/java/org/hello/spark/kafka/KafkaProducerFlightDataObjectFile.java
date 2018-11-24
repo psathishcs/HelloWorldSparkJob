@@ -23,9 +23,9 @@ public class KafkaProducerFlightDataObjectFile {
 		Properties properties = new Properties();
 		properties.put("bootstrap.servers", "skylark.datalake:9092");
 		properties.put("group.id", "rita");
-		 properties.put("client.id", "KafkaFileProducer");
+		properties.put("client.id", "KafkaFileProducer");
 		properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-		properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+		properties.put("value.serializer", "org.hello.spark.dataobject.FlightDataSerializer");
 		
 		KafkaProducer kafkaProducer = new KafkaProducer<String, String>(properties);
 		int count = 0;
